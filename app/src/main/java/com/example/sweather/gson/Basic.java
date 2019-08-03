@@ -1,18 +1,14 @@
+//basic
 package com.example.sweather.gson;
 
 import com.google.gson.annotations.SerializedName;
+//使用注解使java字段和JSON字段建立联系
 
-public class Basic {
-    @SerializedName("city")
-    public String cityName;
+public class Basic{
+    @SerializedName("location")
+    public String cityName;//城市名称
 
-    @SerializedName("id")
-    public String weatherId;
-
-    public Update update;
-
-    public class Update{
-        @SerializedName("loc")
-        public String updateTime;
-    }
+    @SerializedName("cid")
+    public String weatherId;//城市ID（是否需要？）
 }
+

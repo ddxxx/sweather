@@ -23,6 +23,7 @@ import com.example.sweather.db.City;
 import com.example.sweather.db.County;
 import com.example.sweather.db.Province;
 import com.example.sweather.util.HttpUtil;
+import com.example.sweather.util.HttpUtil2;
 import com.example.sweather.util.Utility;
 
 import org.litepal.LitePal;
@@ -73,14 +74,15 @@ public class ChooseAreaFragment extends Fragment {
         titleText=(TextView)view.findViewById(R.id.title_text);
         backButton=(Button)view.findViewById(R.id.back_button);
         listView=(ListView)view.findViewById(R.id.list_view);
-        adapter=new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,dataList);
-        listView.setAdapter(adapter);
+        adapter=new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,dataList);//初始化
+        listView.setAdapter(adapter);//设置为ListView的适配器
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        //响应事件，点击Item
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -109,6 +111,7 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
+        //点击返回按钮
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -191,9 +194,7 @@ public class ChooseAreaFragment extends Fragment {
     //根据地址和类型从服务器上查询省市县数据
     private void queryFromServer(String address,final String type){
         showProgressDialog();
-        HttpUtil.sendOkHttpRequest(address, new Callback() {
-
-
+        HttpUtil2.sendOkHttpRequest(address, new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseText=response.body().string();

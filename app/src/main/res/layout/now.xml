@@ -1,23 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp">
 
     <TextView
+        android:id="@+id/update_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/degree_text"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="#fff"
+        android:textSize="15sp"/>
+    <TextView
         android:id="@+id/degree_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentLeft="true"
         android:textColor="#fff"
         android:textSize="60sp"/>
+    <TextView
+        android:id="@+id/degree_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/degree_text"
+        android:layout_alignTop="@+id/degree_text"
+        android:layout_marginLeft="3dp"
+        android:textColor="#fff"
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/weather_info_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_toRightOf="@+id/degree_text"
+        android:layout_alignBottom="@+id/degree_text"
+        android:layout_marginLeft="3dp"
         android:textColor="#fff"
-        android:textSize="20sp"/>
+        android:textSize="15sp" />
 
-</LinearLayout>
+</RelativeLayout>
