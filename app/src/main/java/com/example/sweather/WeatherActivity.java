@@ -185,7 +185,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         String nowWeatherUrl="https://free-api.heweather.net/s6/weather/now?location=" +
                 weatherId+"&key=2c1ed2821caf4572a05c26380bdf5863";//拼装出接口地址
-        String weatherAqiUrl="https://free-api.heweather.net/s6/air/now?location="+
+        final String weatherAqiUrl="https://free-api.heweather.net/s6/air/now?location="+
                 weatherId+"&key=2c1ed2821caf4572a05c26380bdf5863";
         String weatherForeUrl="https://free-api.heweather.net/s6/weather/forecast?location="+
                 weatherId+"&key=2c1ed2821caf4572a05c26380bdf5863";
@@ -212,8 +212,8 @@ public class WeatherActivity extends AppCompatActivity {
                         else{
                             Toast.makeText(WeatherActivity.this,"获取实时天气信息失败",
                                     Toast.LENGTH_SHORT).show();
+                            swipeRefresh.setRefreshing(false);
                         }
-                        swipeRefresh.setRefreshing(false);
                     }
                 });
             }
@@ -237,19 +237,23 @@ public class WeatherActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {//因为要进行UI操作，必须将线程转换至主线程
                     @Override
                     public void run() {
-                        if(weatherAqi!=null && "ok".equals(weatherAqi.status)){
+                        if(weatherAqi!=null ){
                             //请求成功，数据缓存到SharedPreferences中
                             SharedPreferences.Editor editor=PreferenceManager.getDefaultSharedPreferences
                                     (WeatherActivity.this).edit();
                             editor.putString("weatherAqi",responseText);//添加数据
                             editor.apply();//提交
+                            if(!("ok".equals(weatherAqi.status))){
+                                Toast.makeText(WeatherActivity.this,"无法获取空气质量信息",
+                                        Toast.LENGTH_SHORT).show();
+                            }
                             showWeatherAqiInfo(weatherAqi);
                         }
                         else{
-                            Toast.makeText(WeatherActivity.this,"无法获取空气质量信息",
+                            Toast.makeText(WeatherActivity.this,"获取空气质量信息失败",
                                     Toast.LENGTH_SHORT).show();
+                            swipeRefresh.setRefreshing(false);
                         }
-                  //      swipeRefresh.setRefreshing(false);
                     }
                 });
             }
@@ -282,10 +286,10 @@ public class WeatherActivity extends AppCompatActivity {
                             showWeatherForeInfo(weatherFore);
                         }
                         else{
-                            Toast.makeText(WeatherActivity.this,"获取预报信息失败fore1",
+                            Toast.makeText(WeatherActivity.this,"获取预报信息失败",
                                     Toast.LENGTH_SHORT).show();
+                            swipeRefresh.setRefreshing(false);
                         }
-                   //     swipeRefresh.setRefreshing(false);
                     }
                 });
             }
@@ -320,8 +324,9 @@ public class WeatherActivity extends AppCompatActivity {
                         else{
                             Toast.makeText(WeatherActivity.this,"获取生活建议失败",
                                     Toast.LENGTH_SHORT).show();
+                            swipeRefresh.setRefreshing(false);
                         }
-                        swipeRefresh.setRefreshing(false);
+
                     }
                 });
             }
@@ -357,8 +362,14 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     private void showWeatherAqiInfo(WeatherAqi weatherAqi){
-        aqiText.setText(weatherAqi.air_now_city.aqIndex);
-        qltyText.setText(weatherAqi.air_now_city.qlty);
+        if("ok".equals(weatherAqi.status)){
+            aqiText.setText(weatherAqi.air_now_city.aqIndex);
+            qltyText.setText(weatherAqi.air_now_city.qlty);
+        }
+        else{
+            aqiText.setText("");
+            qltyText.setText("");
+        }
     }
 
     private void showWeatherForeInfo(WeatherFore weatherFore){
@@ -378,7 +389,7 @@ public class WeatherActivity extends AppCompatActivity {
             popText.setText(forecast.pop);
             forecastLayout.addView(view);
         }
-        weatherLayout.setVisibility(View.VISIBLE);
+
     }
 
     private void showWeatherLifeInfo(WeatherLife weatherLife){
@@ -396,6 +407,8 @@ public class WeatherActivity extends AppCompatActivity {
                 sportText.setText(s_sportText);
             }
         }
+        weatherLayout.setVisibility(View.VISIBLE);
+        swipeRefresh.setRefreshing(false);
     }
     //加载必应每日一图
     private void loadBingPic(){
