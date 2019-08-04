@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,17 +96,21 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 }
                 else if(currentLevel==LEVEL_COUNTY){
-                    String weatherId=countyList.get(position).getWeatherId();
-                    if(getActivity()instanceof MainActivity){
+                    String weatherId=(String)countyList.get(position).getWeatherId();
+
+
+                    if(getActivity()instanceof MainActivity){//碎片在MainActivity中（新安装）
+
                         Intent intent=new Intent(getActivity(),WeatherActivity.class);
                         intent.putExtra("weather_id",weatherId);
                         startActivity(intent);
                         getActivity().finish();
                     }
-                    else if(getActivity()instanceof WeatherActivity){
+                    else if(getActivity()instanceof WeatherActivity){//碎片在WeatherActivity中（在app中重新选择区域）
+
                         WeatherActivity activity=(WeatherActivity)getActivity();
-                        activity.drawerLayout.closeDrawers();
-                        activity.swipeRefresh.setRefreshing(true);
+                        activity.drawerLayout.closeDrawers();//关闭滑动菜单
+                        activity.swipeRefresh.setRefreshing(true);//显示下拉刷新进度条
                         activity.requestWeather(weatherId);
                     }
                 }
@@ -239,7 +244,6 @@ public class ChooseAreaFragment extends Fragment {
         });
     }
 
-    //显示进度对话框
     private void showProgressDialog(){
         if(progressDialog == null){
             progressDialog = new ProgressDialog(getActivity());
