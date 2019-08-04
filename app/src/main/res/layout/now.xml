@@ -9,28 +9,29 @@
         android:id="@+id/update_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/degree_text"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:textColor="#fff"
-        android:textSize="15sp"/>
+        android:textSize="16sp"/>
     <TextView
         android:id="@+id/degree_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/update_time"
         android:textColor="#fff"
-        android:textSize="60sp"/>
+        android:textSize="80sp"/>
     <TextView
         android:id="@+id/degree_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/degree_text"
-        android:layout_alignTop="@+id/degree_text"
-        android:layout_marginLeft="3dp"
+        android:layout_below="@id/update_time"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
         android:textColor="#fff"
+        android:text="℃"
         android:textSize="20sp"/>
 
     <TextView
@@ -39,8 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/degree_text"
         android:layout_alignBottom="@+id/degree_text"
-        android:layout_marginLeft="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="10dp"
         android:textColor="#fff"
-        android:textSize="15sp" />
+        android:textSize="20sp" />
 
 </RelativeLayout>

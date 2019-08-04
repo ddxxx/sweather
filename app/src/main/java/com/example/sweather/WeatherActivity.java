@@ -34,6 +34,7 @@ import com.example.sweather.util.HttpUtil2;
 import com.example.sweather.util.Utility;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -63,6 +64,8 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView comfortText;
     private TextView catWashText;
     private TextView sportText;
+    private TextView fluText;
+    private TextView travText;
 
     private ImageView bingPicImg;
 
@@ -85,15 +88,19 @@ public class WeatherActivity extends AppCompatActivity {
         titleCity=(TextView)findViewById(R.id.title_city);
         navButton=(Button)findViewById(R.id.nav_button);
         mulMenu=(Button)findViewById(R.id.mul_menu) ;
+        //now.xml
         updateTime=(TextView)findViewById(R.id.update_time);
         degreeText=(TextView)findViewById(R.id.degree_text);
         weatherInfoText=(TextView) findViewById(R.id.weather_info_text);
+
         forecastLayout=(LinearLayout) findViewById(R.id.forecast_layout);
         aqiText=(TextView)findViewById(R.id.aqi_text);
         qltyText=(TextView)findViewById(R.id.qlty_text);
         comfortText=(TextView)findViewById(R.id.comfort_text);
         catWashText=(TextView)findViewById(R.id.car_wash_text);
         sportText=(TextView)findViewById(R.id.sport_text);
+        fluText=(TextView)findViewById(R.id.flu_text);
+        travText=(TextView)findViewById(R.id.trav_text);
         swipeRefresh=(SwipeRefreshLayout)findViewById(R.id.swipe_refresh);//获取实例，下拉刷新
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);//设置进度条颜色
 
@@ -348,15 +355,15 @@ public class WeatherActivity extends AppCompatActivity {
 
     private void showWeatherInfo(Weather weather){//Weather相关控件更新
         String cityName=weather.basic.cityName;
-        String weatherId=weather.basic.weatherId;
-        String s_updateTime=weather.update.localTime;
+        String s_updateTime=weather.update.localTime+"更新";
         String degree=weather.now.temperature;
-        String weatherInfo=weather.now.cond_tx;
+        String weatherInfo=weather.now.cond_txt;
         titleCity.setText(cityName);
         updateTime.setText(s_updateTime);
         degreeText.setText(degree);
         weatherInfoText.setText(weatherInfo);
 
+        swipeRefresh.setRefreshing(false);
         Intent intent=new Intent(this,AutoUpdateService.class);
         startService(intent);//激活自动更新服务，选中城市成功更新后，该服务会一直在后台运行
     }
@@ -371,25 +378,43 @@ public class WeatherActivity extends AppCompatActivity {
             qltyText.setText("");
         }
     }
-
+    public static int getResId(String variableName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(variableName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
     private void showWeatherForeInfo(WeatherFore weatherFore){
         forecastLayout.removeAllViews();
         for(Forecast forecast:weatherFore.forecastList){
             View view=LayoutInflater.from(this).inflate(R.layout.forecast_item,forecastLayout,false);
             TextView dateText=(TextView)view.findViewById(R.id.date_text);
-
-            TextView infoText=(TextView)view.findViewById(R.id.info_text);
+            ImageView infoImg=(ImageView)view.findViewById(R.id.info_img);
+            TextView humText=(TextView)view.findViewById(R.id.hum_text);
             TextView tmpText=(TextView)view.findViewById(R.id.tmp_text);
+            TextView presText=(TextView)view.findViewById(R.id.pres_text);
+            TextView windText=(TextView)view.findViewById(R.id.wind_text);
+
             TextView popText=(TextView)view.findViewById(R.id.pop_text);
 
-            dateText.setText(forecast.date);
-            infoText.setText(forecast.cond_txt_d);
+            String s=forecast.date;
+            String s_date=s.substring(s.length()-5,s.length());
+            dateText.setText(s_date);
+            String s_infoImg="sw"+forecast.cond_code_d;
+            int id = getResId(s_infoImg, R.drawable.class);
+            infoImg.setImageResource(id);
             String s_tmpText=forecast.tmp_min+"~"+forecast.tmp_max+"℃";
             tmpText.setText(s_tmpText);
-            popText.setText(forecast.pop);
+            humText.setText("湿度: "+forecast.hum+"%");
+            presText.setText("压强:\n"+forecast.pres+"hPa");
+            String s_windText=forecast.wind_dir+":\n"+forecast.wind_sc+"级";
+            windText.setText(s_windText);
+            popText.setText("降水率:\n"+forecast.pop+"%");
             forecastLayout.addView(view);
         }
-
     }
 
     private void showWeatherLifeInfo(WeatherLife weatherLife){
@@ -405,10 +430,17 @@ public class WeatherActivity extends AppCompatActivity {
             else if("sport".equals(suggestion.type)){
                 String s_sportText="运动："+suggestion.brf+"\n"+suggestion.txt;
                 sportText.setText(s_sportText);
+            }else if("flu".equals(suggestion.type)){
+                String s_fluText="感冒指数："+suggestion.brf+"\n"+suggestion.txt;
+                fluText.setText(s_fluText);
             }
+            else if("trav".equals(suggestion.type)){
+                String s_travText="旅游指数："+suggestion.brf+"\n"+suggestion.txt;
+                travText.setText(s_travText);
+            }
+
         }
         weatherLayout.setVisibility(View.VISIBLE);
-        swipeRefresh.setRefreshing(false);
     }
     //加载必应每日一图
     private void loadBingPic(){

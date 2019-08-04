@@ -7,7 +7,7 @@ public class Now {
     @SerializedName("tmp")
     public String temperature;
 
-    public String cond_tx;
+    public String cond_txt;
 
     public String fl;//体感温度
     public String hum;//相对湿度
