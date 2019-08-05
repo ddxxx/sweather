@@ -188,7 +188,6 @@ public class WeatherActivity extends AppCompatActivity {
         if((weatherString!=null) ){
             //选择区域之后会自动更新一次，之后，有缓存时直接解析天气数据
             Weather weather= Utility.handleWeatherResponse(weatherString);
-            showWeatherInfo(weather);
             mWeatherId=weather.basic.weatherId;
         }
         else{

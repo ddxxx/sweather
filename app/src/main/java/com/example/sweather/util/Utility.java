@@ -9,8 +9,11 @@ import com.example.sweather.db.Province;
 import com.example.sweather.gson.Weather;
 import com.example.sweather.gson.WeatherAqi;
 import com.example.sweather.gson.WeatherFore;
+import com.example.sweather.gson.WeatherHist;
 import com.example.sweather.gson.WeatherLife;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -116,6 +119,16 @@ public class Utility {
         }
         return null;
     }
+    //解析历史
+    public static WeatherHist handleWeatherHistResponse(String response){
+        try{
+            return new Gson().fromJson(response,WeatherHist.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     //WeatherLife
     public static WeatherLife handleWeatherLifeResponse(String response){
         try {

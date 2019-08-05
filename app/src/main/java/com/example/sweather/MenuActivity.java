@@ -2,10 +2,18 @@ package com.example.sweather;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.TextView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -14,6 +22,7 @@ public class MenuActivity extends AppCompatActivity {
     private Button viewRankButton;
     private Button autoRefreshButton;
     private Button authorButton;
+    private TextView menuTitleText;
 
 
     @Override
@@ -26,6 +35,9 @@ public class MenuActivity extends AppCompatActivity {
         viewRankButton=(Button)findViewById(R.id.view_rank_button);
         authorButton=(Button)findViewById(R.id.author_button);
         autoRefreshButton=(Button)findViewById(R.id.auto_refresh_button);
+        menuTitleText=(TextView)findViewById(R.id.menu_title_text) ;
+
+        menuTitleText.setText("基本设置");
 
         menuBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +51,12 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Intent intent=new Intent(MenuActivity.this,HistoryActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
+
+
 }
