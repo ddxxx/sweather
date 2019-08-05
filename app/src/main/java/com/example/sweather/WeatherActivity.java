@@ -116,6 +116,16 @@ public class WeatherActivity extends AppCompatActivity {
         SharedPreferences prefs4= PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString4=prefs4.getString("weatherLife",null);
 
+        mulMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(com.example.sweather.WeatherActivity.this,
+                        MenuActivity.class);
+                startActivity(intent);
+            }
+        });
+
         navButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
