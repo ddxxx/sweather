@@ -5,14 +5,7 @@
     android:layout_height="wrap_content">
 
 
-    <View
-        android:id="@+id/hdivider_view"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
-        android:background="#8000"        />
+
     <LinearLayout
         android:id="@+id/history_layout"
         android:orientation="vertical"
