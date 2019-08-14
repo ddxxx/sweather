@@ -95,5 +95,20 @@ public class MenuActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+
+        authorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialog=new AlertDialog.Builder(MenuActivity.this);
+                dialog.setTitle("关于");
+                dialog.setMessage("SWeather\n版本：v1.0\n作者：ddxxx");
+                dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                });
+                dialog.show();
+            }
+        });
     }
 }
