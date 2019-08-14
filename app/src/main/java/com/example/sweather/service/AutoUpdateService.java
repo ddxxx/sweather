@@ -3,12 +3,15 @@ package com.example.sweather.service;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
+import com.example.sweather.db.UpdateFreq;
 import com.example.sweather.gson.Weather;
 import com.example.sweather.gson.WeatherAqi;
 import com.example.sweather.gson.WeatherFore;
@@ -18,6 +21,7 @@ import com.example.sweather.util.HttpUtil2;
 import com.example.sweather.util.Utility;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,7 +41,8 @@ public class AutoUpdateService extends Service {
         updateWeather();//更新天气
         updateBingPic();//更新背景图
         AlarmManager manager=(AlarmManager)getSystemService(ALARM_SERVICE);
-        int anHour=8*60*60*1000;
+        int anHour= UpdateFreq.getUpdate_freq()*60*60*1000;//默认每8小时更新
+        //从设置自动更新频率中传入参数
         long triggerAtTime= SystemClock.elapsedRealtime()+anHour;
         Intent i=new Intent(this,AutoUpdateService.class);
         PendingIntent pi=PendingIntent.getService(this,0,i,0);
@@ -163,4 +168,6 @@ public class AutoUpdateService extends Service {
             }
         });
     }
+
+
 }

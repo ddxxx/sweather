@@ -83,13 +83,10 @@ public class HistoryActivity extends AppCompatActivity {
                                           int monthOfYear, int dayOfMonth) {
 
                         requestWeatherId();//获取城市id
-                        Log.d("1-转换日期的错误",mWeatherId);
                         String s_year=String.format("%04d",year);
-                        Log.d("year",s_year);
                         String s_month=String.format("%02d",monthOfYear);
                         String s_day=String.format("%02d",dayOfMonth);
                         mDate=s_year+s_month+s_day;
-                        Log.d("1-weaid 点击ok后",mDate);
                         historyDate.setText(mDate+"  "+mCityName);
 
                         requestHistory();
@@ -127,7 +124,6 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void requestHistory() {
         String s_weatherid=mWeatherId.substring(2,mWeatherId.length());
-        Log.d("1-修改id",s_weatherid);
         final String requestHistory = "http://api.k780.com/?app=weather.history&weaid=" +
                 s_weatherid+"&date="+mDate+"&appkey=44303&sign=8825b94df83576ebde4c12e7a4a45be4&format=json";
         HttpUtil2.sendOkHttpRequest(requestHistory, new Callback() {
@@ -166,7 +162,6 @@ public class HistoryActivity extends AppCompatActivity {
     }
     private void showWeatherHistInfo(WeatherHist weatherHist){
 
-        Log.d("1-是否在之前停止","1");
         for(Result result:weatherHist.result){
             View view= LayoutInflater.from(this).inflate(R.layout.history_item,historyLayout,false);
 
@@ -174,7 +169,6 @@ public class HistoryActivity extends AppCompatActivity {
             TextView hweatherText=(TextView)view.findViewById(R.id.hweather_text);
             TextView htemperatureText=(TextView)view.findViewById(R.id.htemperature_text);
             TextView haqiText=(TextView)view.findViewById(R.id.haqi_text);
-            Log.d("1-for内uptime",result.uptime);
 
             String s=result.uptime;
             String s_uptime=s.substring(11,s.length());
@@ -184,9 +178,7 @@ public class HistoryActivity extends AppCompatActivity {
             htemperatureText.setText(s_tmp);
             String s_aqi="AQI："+result.aqi;
             haqiText.setText(s_aqi);
-            Log.d("1-这里？tmp",s_tmp);
             historyLayout.addView(view);
-            Log.d("1-add错了？",s_uptime);
         }
     }
 }
