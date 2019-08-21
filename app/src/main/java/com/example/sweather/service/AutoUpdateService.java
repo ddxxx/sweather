@@ -41,7 +41,19 @@ public class AutoUpdateService extends Service {
         updateWeather();//更新天气
         updateBingPic();//更新背景图
         AlarmManager manager=(AlarmManager)getSystemService(ALARM_SERVICE);
-        int anHour= UpdateFreq.getUpdate_freq()*60*60*1000;//默认每8小时更新
+
+        int update_freq=4;
+        SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);
+        if(prefs.getString("update_freq",null)!=null){
+            String inte=prefs.getString("update_freq",null);
+            update_freq=Integer.valueOf(inte);
+        }
+        else{//默认更新频率为4小时，传入
+            SharedPreferences.Editor editor=PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
+            editor.putString("update_freq","4");
+            editor.apply();
+        }
+        int anHour= update_freq*60*60*1000;//默认每4小时更新
         //从设置自动更新频率中传入参数
         long triggerAtTime= SystemClock.elapsedRealtime()+anHour;
         Intent i=new Intent(this,AutoUpdateService.class);

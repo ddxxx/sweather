@@ -142,6 +142,7 @@ public class WeatherActivity extends AppCompatActivity {
             showWeatherAqiInfo(weatherAqi);
 
             WeatherFore weatherFore=Utility.handleWeatherForeResponse(weatherString3);
+
             showWeatherForeInfo(weatherFore);
 
             WeatherLife weatherLife=Utility.handleWeatherLifeResponse(weatherString4);
@@ -185,7 +186,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         SharedPreferences prefs4= PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString4=prefs4.getString("weatherLife",null);
-        if((weatherString!=null) ){
+        if((weatherString!=null)&&(weatherString2!=null)&&(weatherString3!=null)&&(weatherString4!=null)){
             //选择区域之后会自动更新一次，之后，有缓存时直接解析天气数据
             Weather weather= Utility.handleWeatherResponse(weatherString);
             mWeatherId=weather.basic.weatherId;

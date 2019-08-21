@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Presentation;
+import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,10 +50,10 @@ public class MenuActivity extends AppCompatActivity {
         menuTitleText=(TextView)findViewById(R.id.menu_title_text) ;
 
         menuTitleText.setText("基本设置");
-        if(UpdateFreq.getUpdate_freq()==0)
-            UpdateFreq.setUpdate_freq(2);
-        String s=Integer.toString(UpdateFreq.getUpdate_freq());
-        autoRefreshButton.setText("自动更新频率\n（"+s+"小时）");
+        String update_freq;
+        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(this);
+        update_freq=prefs.getString("update_freq",null);
+        autoRefreshButton.setText("自动更新频率\n（"+update_freq+"小时）");
 
         menuBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,9 +87,20 @@ public class MenuActivity extends AppCompatActivity {
                 alertBuilder.setTitle("设定自动更新频率");
                 alertBuilder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(DialogInterface dialogInterface, int i)    {
                         Toast.makeText(MenuActivity.this,"每"+items[i]+"自动更新",
                                 Toast.LENGTH_SHORT).show();
+
+                        //----SharedPreferences
+                        SharedPreferences.Editor editor= PreferenceManager.getDefaultSharedPreferences(MenuActivity.this).edit();
+                        editor.putString("update_freq",items[i].substring(0,1));
+                        editor.apply();
+
+                        //------------
+                        /*  Intent intent_freq=new Intent(MenuActivity.this, Service.class);
+                        intent_freq.putExtra("update_freq",items[i].substring(0,1));
+                        startService(intent_freq);
+                      不知道如何更新  */
                         UpdateFreq.setUpdate_freq(Integer.valueOf(items[i].substring(0,1)));
                         autoRefreshButton.setText("自动更新频率\n（"+items[i]+"）");
                         alertDialog.dismiss();
