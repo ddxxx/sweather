@@ -4,14 +4,15 @@
     android:layout_height="50dp"
     android:orientation="horizontal"
     android:background="@color/colorPrimary">
+
     <Button
         android:id="@+id/menu_back_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="5dp"
+        android:layout_width="19dp"
+        android:layout_height="27dp"
         android:layout_margin="10dp"
-        android:gravity="center_vertical"
-        android:background="@drawable/ic_arrow_back_white_24dp"/>
+        android:layout_marginRight="5dp"
+        android:background="@drawable/ic_arrow_back_white_24dp"
+        android:gravity="center_vertical" />
     <TextView
         android:id="@+id/menu_title_text"
         android:layout_width="wrap_content"
@@ -19,5 +20,6 @@
         android:layout_gravity="center_vertical"
         android:textSize="20sp"
         android:textColor="#fff"/>
+
 
 </LinearLayout>

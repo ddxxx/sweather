@@ -6,6 +6,7 @@ import com.example.sweather.WeatherActivity;
 import com.example.sweather.db.City;
 import com.example.sweather.db.County;
 import com.example.sweather.db.Province;
+import com.example.sweather.gson.HotCity;
 import com.example.sweather.gson.Weather;
 import com.example.sweather.gson.WeatherAqi;
 import com.example.sweather.gson.WeatherFore;
@@ -119,7 +120,7 @@ public class Utility {
         }
         return null;
     }
-    //解析历史
+    //解析历史  新的格式的GSON
     public static WeatherHist handleWeatherHistResponse(String response){
         try{
             return new Gson().fromJson(response,WeatherHist.class);
@@ -137,6 +138,20 @@ public class Utility {
             String weatherContent=jsonArray.getJSONObject(0).toString();
             return new Gson().fromJson(weatherContent, WeatherLife.class);
         }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //解析HotCity实体类
+    public static HotCity handleHotCityResponse(String response){
+        try{
+            JSONObject jsonObject=new JSONObject(response);
+            JSONArray jsonArray=jsonObject.getJSONArray("HeWeather6");
+            String cityContent=jsonArray.getJSONObject(0).toString();
+            return new Gson().fromJson(cityContent,HotCity.class);
+
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return null;

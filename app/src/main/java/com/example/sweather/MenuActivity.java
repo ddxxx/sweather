@@ -18,7 +18,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sweather.db.UpdateFreq;
 import com.example.sweather.service.AutoUpdateService;
 
 import java.text.ParseException;
@@ -74,9 +73,12 @@ public class MenuActivity extends AppCompatActivity {
         viewRankButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MenuActivity.this,HistoryActivity.class);
+             /*
+                Intent intent=new Intent(MenuActivity.this,RankActivity.class);
                 startActivity(intent);
                 finish();
+
+              */
             }
         });
         autoRefreshButton.setOnClickListener(new View.OnClickListener() {
@@ -91,17 +93,10 @@ public class MenuActivity extends AppCompatActivity {
                         Toast.makeText(MenuActivity.this,"每"+items[i]+"自动更新",
                                 Toast.LENGTH_SHORT).show();
 
-                        //----SharedPreferences
                         SharedPreferences.Editor editor= PreferenceManager.getDefaultSharedPreferences(MenuActivity.this).edit();
                         editor.putString("update_freq",items[i].substring(0,1));
                         editor.apply();
 
-                        //------------
-                        /*  Intent intent_freq=new Intent(MenuActivity.this, Service.class);
-                        intent_freq.putExtra("update_freq",items[i].substring(0,1));
-                        startService(intent_freq);
-                      不知道如何更新  */
-                        UpdateFreq.setUpdate_freq(Integer.valueOf(items[i].substring(0,1)));
                         autoRefreshButton.setText("自动更新频率\n（"+items[i]+"）");
                         alertDialog.dismiss();
                     }

@@ -11,7 +11,6 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 
-import com.example.sweather.db.UpdateFreq;
 import com.example.sweather.gson.Weather;
 import com.example.sweather.gson.WeatherAqi;
 import com.example.sweather.gson.WeatherFore;
