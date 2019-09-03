@@ -73,12 +73,11 @@ public class MenuActivity extends AppCompatActivity {
         viewRankButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             /*
+/*
                 Intent intent=new Intent(MenuActivity.this,RankActivity.class);
                 startActivity(intent);
                 finish();
-
-              */
+ */
             }
         });
         autoRefreshButton.setOnClickListener(new View.OnClickListener() {

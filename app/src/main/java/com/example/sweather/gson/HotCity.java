@@ -1,6 +1,11 @@
 package com.example.sweather.gson;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class HotCity {
-    public HotCityBasic basic;
+    @SerializedName("basic")
+    public List<HotCityBasic> hotCityBasics;
     public String status;
 }

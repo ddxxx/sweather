@@ -8,4 +8,12 @@
         <mapping class="com.example.sweather.db.City"/>
         <mapping class="com.example.sweather.db.County"/>
     </list>
+
+    <dbname value="hotcity"/>
+    <version value="1"/>
+
+    <list>
+        <mapping class="com.example.sweather.db.HotCityDB"/>
+    </list>
+
 </litepal>

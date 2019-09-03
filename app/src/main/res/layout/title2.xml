@@ -7,7 +7,7 @@
 
     <Button
         android:id="@+id/menu_back_button"
-        android:layout_width="19dp"
+        android:layout_width="27dp"
         android:layout_height="27dp"
         android:layout_margin="10dp"
         android:layout_marginRight="5dp"

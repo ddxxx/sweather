@@ -21,7 +21,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="17dp"
-        android:layout_marginLeft="110dp"
+        android:layout_marginLeft="90dp"
         android:text="晴"
         android:textSize="15sp"/>
     <TextView
@@ -31,7 +31,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="17dp"
-        android:layout_marginLeft="180dp"
+        android:layout_marginLeft="140dp"
         android:text="温度：22℃"
         android:textSize="15sp"/>
     <TextView
@@ -41,7 +41,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="17dp"
-        android:layout_marginLeft="300dp"
+        android:layout_marginLeft="260dp"
         android:text="AQI：23"
         android:textSize="15sp"/>
 
